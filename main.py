@@ -26,6 +26,7 @@ class TradingBot:
         self.symbols = SYMBOLS
         self.interval = INTERVAL
         self._initialize_account()
+        self.api.initialize_cache(self.symbols, self.interval)
         self._load_existing_positions()
 
     def _initialize_account(self):
