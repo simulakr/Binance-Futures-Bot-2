@@ -164,11 +164,11 @@ def calculate_indicators(df: pd.DataFrame, symbol: str) -> pd.DataFrame:
   
     # ATR ZigZag (2x ve 3x)
     df = calculate_atr_zigzag(df, atr_col="z", atr_mult=1.25, suffix="_2x")
-    df = calculate_atr_zigzag(df, atr_col="z", atr_mult=3.0, suffix="_3x")
+    # df = calculate_atr_zigzag(df, atr_col="z", atr_mult=3.0, suffix="_3x")
 
     # Market Yapısı
     df = add_market_structure(df, "_2x")
-    df = add_market_structure(df, "_3x")
+    # df = add_market_structure(df, "_3x")
 
     # ATR filtre maskesi
     atr_ok = (atr_low < df["pct_atr"]) & (df["pct_atr"] < atr_high)
