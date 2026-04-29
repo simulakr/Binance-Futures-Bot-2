@@ -282,14 +282,25 @@ class TradingBot:
         for symbol, data in all_data.items():
             if not data:
                 signals[symbol] = None
-            elif check_long_entry(data, symbol):
+                logger.info(f"{symbol} | veri yok")
+                continue
+    
+            long  = check_long_entry(data, symbol)
+            short = check_short_entry(data, symbol)
+    
+            logger.info(
+                f"{symbol} | close={data['close']:.5f} | pct_atr={data['pct_atr']:.4f} | "
+                f"breakout={data.get('pivot_goup_breakout_2x')} | breakdown={data.get('pivot_goup_breakdown_2x')} | "
+                f"sinyal={'LONG' if long else 'SHORT' if short else 'YOK'}"
+            )
+    
+            if long:
                 signals[symbol] = 'LONG'
-                logger.info(f"{symbol} LONG sinyali üretildi")
-            elif check_short_entry(data, symbol):
+            elif short:
                 signals[symbol] = 'SHORT'
-                logger.info(f"{symbol} SHORT sinyali üretildi")
             else:
                 signals[symbol] = None
+    
         return signals
 
     def _execute_trades(self, signals: Dict[str, Optional[str]], all_data: Dict[str, Optional[Dict]]):
