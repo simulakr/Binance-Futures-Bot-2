@@ -3,7 +3,7 @@ import logging
 import datetime
 import pandas as pd
 from typing import Dict, Optional
-from config import SYMBOLS, INTERVAL, LEVERAGE
+from config import SYMBOLS, INTERVAL, LEVERAGE, SYMBOL_SETTINGS
 from exchange import BybitFuturesAPI
 from indicators import calculate_indicators
 from entry_strategies import check_long_entry, check_short_entry
