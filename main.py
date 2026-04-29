@@ -36,7 +36,7 @@ class TradingBot:
                 symbol_config = SYMBOL_SETTINGS.get(symbol, {})
                 leverage = symbol_config.get('leverage', DEFAULT_LEVERAGE)
     
-                # 1. Leverage set
+                # SADECE LEVERAGE SET ET (margin mode yok)
                 self.api.session.set_leverage(
                     category="linear",
                     symbol=symbol,
@@ -44,7 +44,7 @@ class TradingBot:
                     sellLeverage=str(leverage)
                 )
     
-                logger.info(f"{symbol} | Mode: ISOLATED | Leverage: {leverage}x")
+                logger.info(f"{symbol} leverage ayarlandı: {leverage}x")
     
             except Exception as e:
                 if "not modified" in str(e):
