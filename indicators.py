@@ -202,17 +202,13 @@ def calculate_indicators(df: pd.DataFrame, symbol: str) -> pd.DataFrame:
 
     # ─── Shift koşulu (ortak) ────────────────────────────────────────────────
 
-    long_conditions = [
-        (df["high_pivot_ff_2x"].notna() & (df["close"].shift(i) < long_break_condition)).fillna(False)
-        for i in range(1, 6)
-    ]
-    long_shift_ok = pd.concat(long_conditions, axis=1).all(axis=1)
-
-    short_conditions = [
-        (df["low_pivot_ff_2x"].notna() & (df["close"].shift(i) > short_break_condition)).fillna(False)
-        for i in range(1, 6)
-    ]
-    short_shift_ok = pd.concat(short_conditions, axis=1).all(axis=1)
+    long_shift_ok = pd.Series(True, index=df.index)
+    for i in range(1, 6):
+        long_shift_ok &= (df['close'].shift(i) < long_break_condition)
+    
+    short_shift_ok = pd.Series(True, index=df.index)
+    for i in range(1, 6):
+        short_shift_ok &= (df['close'].shift(i) > short_break_condition)
 
     # ─── pivot_go_breakout_2x: high_structure != HH (erken geçiş) ────────────
 
